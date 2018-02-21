@@ -1,2 +1,2 @@
 # tarkvaratehnika
-Tarkvaratehnika projekt
+Tarkvaratehnika projekt..
