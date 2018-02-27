@@ -1,10 +1,11 @@
 <template>
-	Hetkel on ${appName} kasutajaid ${count}
+	Registreeru kasutajaks:
 	<form id="userform" submit.delegate="addUser()">
+		<div><label for="email">Email</label><input id="email" type="email" name="email" value.bind="userData.email"></div>
+		<div><label for="password">Password</label><input id="password" type="text" name="password" value.bind="userData.password"></div>
 		<div><label for="firstName">First name</label><input id="firstName" type="text" name="firstName" value.bind="userData.firstName"></div>
 		<div><label for="lastName">Last name</label><input id="lastName" type="text" name="lastName" value.bind="userData.lastName"></div>
-		<div><label for="email">Email</label><input id="email" type="email" name="email" value.bind="userData.email"></div>
 		<div><label for="phoneNumber">Phone number</label><input id="phoneNumber" type="number" name="phoneNumber" value.bind="userData.phoneNumber"></div>
-		<input type="submit" name="Lisa kasutaja">
+		<button type="submit">Registreeru </button>
 	</form>
 </template>
