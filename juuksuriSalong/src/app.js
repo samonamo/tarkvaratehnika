@@ -1,5 +1,10 @@
 export class App {
-  constructor() {
-    this.message = 'Tere tulemast mittefunktsionaalsele juuksurisalongi veebilehele!';
-  }
+configureRouter(config, router) {
+        this.router = router;
+        config.title = 'My Aurelia application';
+        config.map([
+          { route: ['', 'home'],       name: 'home',       moduleId: 'home/index' },
+          { route: 'people',            name: 'people',      moduleId: 'people/people', nav: true}
+        ]);
+      }
 }
