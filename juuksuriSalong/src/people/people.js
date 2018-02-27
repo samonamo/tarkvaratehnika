@@ -2,6 +2,8 @@ import {HttpClient, json} from 'aurelia-fetch-client'
 
 export class people{
 
+	userData = {}
+
 	constructor()	{
 		this.appName = "juuksuriSalong"
 		this.count = 0
@@ -10,17 +12,16 @@ export class people{
 	addUser() {
 		let client = new HttpClient();
 
-		let userData = {
-			"firstName": "MyName",
-			"lastName": "MyLastName",
-			"numOfPets": 11,
-			"email":"testemail@gmail.com",
-			"phoneNumber":"551231231",
-		}
-		console.log(json(userData))
+		// let userData = {
+		// 	"firstName": "MyName",
+		// 	"lastName": "MyLastName",
+		// 	"email":"testemail@gmail.com",
+		// 	"phoneNumber":"551231231",
+		// }
+		console.log("Selle ma saadan serverile", json(this.userData))
 		client.fetch('http://localhost:8080/greeting', {
 			'method': "POST",
-			'body': json(userData)
+			'body': json(this.userData)
 			// 'body':"midagi"
 			// 'body':string("midagi")
 		})
