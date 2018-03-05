@@ -3,14 +3,16 @@ package com.juuksurisalong.web.data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "users")
 @Getter
 @Setter
-public class Users {
+public class User {
 	@Id
 	@GeneratedValue
 	long id;
