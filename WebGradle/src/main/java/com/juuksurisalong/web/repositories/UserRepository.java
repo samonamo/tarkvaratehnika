@@ -8,6 +8,6 @@ import com.juuksurisalong.web.data.User;
 
 
 public interface UserRepository extends CrudRepository<User, Long> {
-	List<User> findByFirstName(String firstName);
+	List<User> findByEmail(String email);
 
 }

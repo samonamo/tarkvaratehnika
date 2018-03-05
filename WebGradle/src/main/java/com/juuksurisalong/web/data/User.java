@@ -11,6 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +24,9 @@ public class User {
 	@Id
 	@GeneratedValue
 	long userId;
+	@NotNull
 	String email;
+	@NotNull
 	String password;
 	String firstName;
 	String lastName;
@@ -63,4 +66,24 @@ public class User {
 	public String getLastName() {
 		return lastName;
 	}
+	public long getUserId() {
+		return userId;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public boolean isEmailConfirmed() {
+		return emailConfirmed;
+	}
+
+	
 }
