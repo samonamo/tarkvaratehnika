@@ -7,15 +7,15 @@ public class Role {
 	
 	@Id
 	@GeneratedValue
-	long userId;
+	long roleId;
 	String description;
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public long getUserId() {
-		return userId;
+	public long getRoleId() {
+		return roleId;
 	}
 
 	public String getDescription() {
