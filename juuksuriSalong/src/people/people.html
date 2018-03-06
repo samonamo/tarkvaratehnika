@@ -8,4 +8,11 @@
 		<div><label for="phoneNumber">Phone number</label><input id="phoneNumber" type="number" name="phoneNumber" value.bind="userData.phoneNumber"></div>
 		<button type="submit">Registreeru </button>
 	</form>
+
+	<p>
+		<h3>Olemas olevad kasutajad:</h3>
+		<ul>
+			<li repeat.for="user of userList">${user.firstName} ${user.lastName}</li>
+		</ul>
+	</p>
 </template>
