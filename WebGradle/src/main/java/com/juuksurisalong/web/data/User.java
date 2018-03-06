@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User {
-	@Id
+	@Id()
 	@GeneratedValue
 	long userId;
 	@NotNull
@@ -57,9 +57,7 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public long getId() {
-		return userId;
-	}
+
 	public String getFirstName() {
 		return firstName;
 	}
