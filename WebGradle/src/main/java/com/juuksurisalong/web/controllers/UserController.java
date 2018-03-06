@@ -41,7 +41,7 @@ public class UserController {
 		} else {
 			//400 Bad Request
 		}
-		return user;
+		return dbUser;
 	}
 
 	@RequestMapping(path="users/all", method=RequestMethod.GET)
@@ -76,7 +76,7 @@ public class UserController {
 			//400 Bad Request
 		}
 		
-		return user;
+		return dbUser;
 	}
 	
 	@RequestMapping(path="/login", method=RequestMethod.POST, consumes="application/json")
