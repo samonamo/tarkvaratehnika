@@ -1,5 +1,6 @@
 package com.juuksurisalong.web.controllers;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.hash.Hashing;
 import com.juuksurisalong.web.data.Role;
 import com.juuksurisalong.web.data.User;
 import com.juuksurisalong.web.repositories.RoleRepository;
@@ -33,7 +35,7 @@ public class UserController {
 	@RequestMapping(path="users/{id}", method=RequestMethod.PUT, consumes="application/json")
 	public @ResponseBody User updateUserById(@PathVariable("id") long id, @RequestBody User user) {
 		User dbUser = userRepository.findByEmail(user.getEmail());
-		if (dbUser!=null && dbUser.getPassword().equals(user.getPassword())) {
+		if (dbUser!=null && dbUser.getPassword().equals(hashing(user.getPassword()))) {
 			dbUser = user;
 			userRepository.save(dbUser);
 		} else {
@@ -55,6 +57,7 @@ public class UserController {
 	public @ResponseBody User saveUser(@RequestBody User user) {
 		//Register user 
 		if (userRepository.findByEmail(user.getEmail())==null) {
+			user.setPassword(hashing(user.getPassword()));
 			userRepository.save(user);
 		} else {
 			//400 Bad Request
@@ -67,7 +70,7 @@ public class UserController {
 	public @ResponseBody User deleteUser(@RequestBody User user) {
 		//Delete user
 		User dbUser = userRepository.findByEmail(user.getEmail());
-		if (dbUser!=null && dbUser.getPassword().equals(user.getPassword())) {
+		if (dbUser!=null && dbUser.getPassword().equals(hashing(user.getPassword()))) {
 			userRepository.delete(user.getUserId());
 		} else {
 			//400 Bad Request
@@ -80,7 +83,7 @@ public class UserController {
 	public @ResponseBody User login(@RequestBody User user) {
 		//User data check
 		User dbUser = userRepository.findByEmail(user.getEmail());
-		if (dbUser!=null && dbUser.getPassword().equals(user.getPassword())) {
+		if (dbUser!=null && dbUser.getPassword().equals(hashing(user.getPassword()))) {
 			return user;
 		} else {
 			return null;
@@ -93,5 +96,9 @@ public class UserController {
 		//Add role (client/worker)
 		roleRepository.save(role);
 		return role;
+	}
+	
+	private String  hashing(String originalPassword) {
+			return Hashing.sha256().hashString(originalPassword + "kala", StandardCharsets.UTF_8).toString();
 	}
 }
