@@ -88,7 +88,7 @@ public class UserController {
 		
 	}
 	
-	
+	@Autowired
 	@RequestMapping(path="roles/add", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody Role addRole(@RequestBody Role role) {
 		roleRepository.save(role);
