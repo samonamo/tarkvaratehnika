@@ -84,7 +84,7 @@ public class UserController {
 		//User data check
 		User dbUser = userRepository.findByEmail(user.getEmail());
 		if (dbUser!=null && dbUser.getPassword().equals(hashing(user.getPassword()))) {
-			return user;
+			return dbUser;
 		} else {
 			return null;
 		}
