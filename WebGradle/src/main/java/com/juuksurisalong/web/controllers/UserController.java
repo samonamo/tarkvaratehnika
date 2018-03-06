@@ -39,7 +39,7 @@ public class UserController {
 		return userRepository.findAll();
 	}
 	
-	@PostMapping(path="users/register")
+	@PostMapping(path="users/register", consumes="application/json")
 	public @ResponseBody User saveUser(@RequestBody User user) {
 		//Validate if email is unique
 		if (userRepository.findByEmail(user.getEmail()).isEmpty()) {
