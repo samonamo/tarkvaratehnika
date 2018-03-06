@@ -1,15 +1,10 @@
 package com.juuksurisalong.web.controllers;
 
-import java.sql.Date;
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,22 +22,34 @@ public class UserController {
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
 
-	@GetMapping(path="users/{id}")
+	@RequestMapping(path="users/{id}", method=RequestMethod.GET)
 	public @ResponseBody User getUserById(@PathVariable("id") long id) {
 		// This returns a JSON or XML with the users
 		return userRepository.findOne(id);
 	}
+	
+	@RequestMapping(path="users/{id}", method=RequestMethod.PUT)
+	public @ResponseBody User updateUserById(@PathVariable("id") long id, @RequestBody User user) {
+		User dbUser = userRepository.findByEmail(user.getEmail());
+		if (dbUser!=null && dbUser.getPassword().equals(user.getPassword())) {
+			dbUser = user;
+			userRepository.save(dbUser);
+		} else {
+			//400 Bad Request
+		}
+		return user;
+	}
 
-	@GetMapping(path="users/all")
+	@RequestMapping(path="users/all", method=RequestMethod.GET)
 	public @ResponseBody Iterable<User> getAllUsers() {
 		// This returns a JSON or XML with the users
 		return userRepository.findAll();
 	}
 	
-	@PostMapping(path="users/register", consumes="application/json")
+	@RequestMapping(path="users/register", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody User saveUser(@RequestBody User user) {
 		//Validate if email is unique
-		if (userRepository.findByEmail(user.getEmail()).isEmpty()) {
+		if (userRepository.findByEmail(user.getEmail())!=null) {
 			userRepository.save(user);
 		} else {
 			//400 Bad Request
@@ -51,10 +58,11 @@ public class UserController {
 		return user;
 	}
 	
-	@DeleteMapping(path="users/delete")
+	@RequestMapping(path="users/delete", method=RequestMethod.DELETE)
 	public @ResponseBody User deleteUser(@RequestBody User user) {
 		//Validate if email is unique
-		if (!userRepository.findByEmail(user.getEmail()).isEmpty()) {
+		User dbUser = userRepository.findByEmail(user.getEmail());
+		if (dbUser!=null && dbUser.getPassword().equals(user.getPassword())) {
 			userRepository.delete(user.getId());
 		} else {
 			//400 Bad Request
@@ -63,7 +71,20 @@ public class UserController {
 		return user;
 	}
 	
-	@PostMapping(path="roles/add", consumes="application/json")
+	@RequestMapping(path="/login", method=RequestMethod.POST)
+	public @ResponseBody User login(@RequestBody User user) {
+		
+		User dbUser = userRepository.findByEmail(user.getEmail());
+		if (dbUser!=null && dbUser.getPassword().equals(user.getPassword())) {
+			return user;
+		} else {
+			return null;
+		}
+		
+	}
+	
+	
+	@RequestMapping(path="roles/add", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody Role addRole(@RequestBody Role role) {
 		roleRepository.save(role);
 		return role;
