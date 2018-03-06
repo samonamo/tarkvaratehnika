@@ -28,7 +28,7 @@ public class UserController {
 		return userRepository.findOne(id);
 	}
 	
-	@RequestMapping(path="users/{id}", method=RequestMethod.PUT)
+	@RequestMapping(path="users/{id}", method=RequestMethod.PUT, consumes="application/json")
 	public @ResponseBody User updateUserById(@PathVariable("id") long id, @RequestBody User user) {
 		User dbUser = userRepository.findByEmail(user.getEmail());
 		if (dbUser!=null && dbUser.getPassword().equals(user.getPassword())) {
@@ -58,7 +58,7 @@ public class UserController {
 		return user;
 	}
 	
-	@RequestMapping(path="users/delete", method=RequestMethod.DELETE)
+	@RequestMapping(path="users/delete", method=RequestMethod.DELETE, consumes="application/json")
 	public @ResponseBody User deleteUser(@RequestBody User user) {
 		//Validate if email is unique
 		User dbUser = userRepository.findByEmail(user.getEmail());
@@ -71,7 +71,7 @@ public class UserController {
 		return user;
 	}
 	
-	@RequestMapping(path="/login", method=RequestMethod.POST)
+	@RequestMapping(path="/login", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody User login(@RequestBody User user) {
 		
 		User dbUser = userRepository.findByEmail(user.getEmail());
