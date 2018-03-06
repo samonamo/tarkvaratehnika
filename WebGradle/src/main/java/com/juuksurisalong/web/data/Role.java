@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class Role {
 	@Id
 	@GeneratedValue
 	long roleId;
+	@NotNull
 	String description;
 
 	public void setDescription(String description) {

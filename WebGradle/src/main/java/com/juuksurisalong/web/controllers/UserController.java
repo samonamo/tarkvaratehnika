@@ -1,5 +1,7 @@
 package com.juuksurisalong.web.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,14 +44,17 @@ public class UserController {
 
 	@RequestMapping(path="users/all", method=RequestMethod.GET)
 	public @ResponseBody Iterable<User> getAllUsers() {
-		// This returns a JSON or XML with the users
-		return userRepository.findAll();
+		List<User> users = userRepository.findAll();
+		if (!users.isEmpty()) {
+			return users;
+		}
+		return null;
 	}
 	
 	@RequestMapping(path="users/register", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody User saveUser(@RequestBody User user) {
 		//Validate if email is unique
-		if (userRepository.findByEmail(user.getEmail())!=null) {
+		if (userRepository.findByEmail(user.getEmail())==null) {
 			userRepository.save(user);
 		} else {
 			//400 Bad Request
@@ -63,7 +68,7 @@ public class UserController {
 		//Validate if email is unique
 		User dbUser = userRepository.findByEmail(user.getEmail());
 		if (dbUser!=null && dbUser.getPassword().equals(user.getPassword())) {
-			userRepository.delete(user.getId());
+			userRepository.delete(user.getUserId());
 		} else {
 			//400 Bad Request
 		}
