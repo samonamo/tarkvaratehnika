@@ -1,4 +1,8 @@
 <template>
+	<a href = 'http://localhost:9000/#/'>Pealeht</a>
+	<a href = 'http://localhost:9000/#/people'>Registreeri</a>
+	<a href = 'http://localhost:9000/#/login'>Login</a>
+	<p>
 	Registreeru kasutajaks:
 	<form id="userform" submit.delegate="addUser()">
 		<div><label for="email">Email</label><input id="email" type="email" name="email" value.bind="userData.email"></div>
@@ -8,6 +12,7 @@
 		<div><label for="phoneNumber">Phone number</label><input id="phoneNumber" type="number" name="phoneNumber" value.bind="userData.phoneNumber"></div>
 		<button type="submit">Registreeru </button>
 	</form>
+	</p>
 
 	<p>
 		<h3>Olemas olevad kasutajad:</h3>
