@@ -1,14 +1,23 @@
 import React, {Component} from 'react';
 import SignIn from "./components/bodyComponents/SignIn";
 import SignUp from "./components/bodyComponents/SignUp";
-import {Link, Route, BrowserRouter} from "react-router-dom";
+import {Link, Route, BrowserRouter as Router} from "react-router-dom";
+
+import './Css.css';
+
+
+const Home = () => (
+    <div>
+        <h2>Juuksurisalong</h2>
+    </div>
+);
 
 class Main extends Component {
 
     render() {
         return (
 
-            <BrowserRouter>
+            <Router>
                 <div>
                     <ul>
                         <li><Link to="/">Home</Link></li>
@@ -16,11 +25,11 @@ class Main extends Component {
                         <li><Link to="/SignUp">Sign up</Link></li>
                     </ul>
 
-                    <Route exact path="/" component={Main}/>
+                    <Route exact path="/" component={Home}/>
                     <Route path="/SignIn" component={SignIn}/>
                     <Route path="/SignUp" component={SignUp}/>
                 </div>
-            </BrowserRouter>
+            </Router>
 
         );
     }
