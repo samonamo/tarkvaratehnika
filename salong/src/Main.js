@@ -7,7 +7,7 @@ import './Css.css';
 
 
 const Home = () => (
-    <div>
+    <div className="Homepage">
         <h2>Juuksurisalong</h2>
     </div>
 );
