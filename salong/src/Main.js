@@ -4,11 +4,13 @@ import SignUp from "./components/bodyComponents/SignUp";
 import {Link, Route, BrowserRouter as Router} from "react-router-dom";
 
 import './Css.css';
+import {ListOfWords} from "./components/bodyComponents/ListOfWords";
 
 
 const Home = () => (
     <div className="Homepage">
         <h2>Juuksurisalong</h2>
+        <ListOfWords/>
     </div>
 );
 
