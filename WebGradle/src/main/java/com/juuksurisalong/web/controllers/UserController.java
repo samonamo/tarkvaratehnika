@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.hash.Hashing;
+import com.juuksurisalong.web.data.PriceList;
 import com.juuksurisalong.web.data.Role;
 import com.juuksurisalong.web.data.User;
 import com.juuksurisalong.web.repositories.RoleRepository;
 import com.juuksurisalong.web.repositories.UserRepository;
+import com.juuksurisalong.web.repositories.PriceListRepository;
 
 
 @Controller
@@ -25,6 +27,8 @@ public class UserController {
 	private UserRepository userRepository;
 	@Autowired
 	private RoleRepository roleRepository;
+	@Autowired
+	private PriceListRepository priceListRepository;
 
 	@RequestMapping(path="users/{id}", method=RequestMethod.GET)
 	public @ResponseBody User getUserById(@PathVariable("id") long id) {
@@ -96,6 +100,15 @@ public class UserController {
 		//Add role (client/worker)
 		roleRepository.save(role);
 		return role;
+	}
+	
+	@RequestMapping(path="price/getlist", method=RequestMethod.GET, consumes="application/json")
+	public @ResponseBody Iterable<PriceList> getFullPriceList () {
+		List<PriceList> pricelist = priceListRepository.findAll();
+			if (!pricelist.isEmpty()) {
+				return pricelist;
+			}
+			return null;
 	}
 	
 	private String  hashing(String originalPassword) {
