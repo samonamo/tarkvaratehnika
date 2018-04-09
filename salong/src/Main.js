@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 import SignIn from "./components/bodyComponents/SignIn";
 import SignUp from "./components/bodyComponents/SignUp";
 import {Link, Route, BrowserRouter as Router} from "react-router-dom";
-
 import './Css.css';
-import {ListOfWords} from "./components/bodyComponents/ListOfWords";
+import {ListOfWorks} from "./components/bodyComponents/ListOfWorks";
+import AcceptBooking from "./components/bodyComponents/AcceptBooking";
 
 
 const Home = () => (
     <div className="Homepage">
         <h2>Juuksurisalong</h2>
-        <ListOfWords/>
+        <ListOfWorks/>
     </div>
 );
 
@@ -30,6 +30,7 @@ class Main extends Component {
                     <Route exact path="/" component={Home}/>
                     <Route path="/SignIn" component={SignIn}/>
                     <Route path="/SignUp" component={SignUp}/>
+                    <Route path="/AcceptBooking" component={AcceptBooking}/>
                 </div>
             </Router>
 

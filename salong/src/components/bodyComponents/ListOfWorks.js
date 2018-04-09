@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Checkbox from "../helpClasses/CheckBox";
+import {Link} from "react-router-dom";
+
 
 const items = [
     'Lõikus',
@@ -7,13 +9,15 @@ const items = [
     'Soeng',
 ];
 
-class ListOfWords extends Component {
-    componentWillMount = () => {
-        this.state = {list: {}};
+class ListOfWorks extends Component {
+    constructor(props) {
+        super(props);
         this.selectedCheckboxes = new Set();
-    };
+    }
+
 
     toggleCheckbox = label => {
+
         if (this.selectedCheckboxes.has(label)) {
             this.selectedCheckboxes.delete(label);
         } else {
@@ -21,44 +25,39 @@ class ListOfWords extends Component {
         }
     };
 
-
-
-    handleFormSubmit = formSubmitEvent => {
-        formSubmitEvent.preventDefault();
-
-        for (const checkbox of this.selectedCheckboxes) {
-            console.log(checkbox, 'is selected.');
-
-        }
-    };
     createCheckbox = label => (
         <Checkbox
             label={label}
-            handleCheckboxChange={this.toggleCheckbox}
+            handleCheckboxChange={this.toggleCheckbox.bind(this)}
             key={label}
         />
     );
 
     createCheckboxes = () => (
-        items.map(this.createCheckbox)
+        items.map(this.createCheckbox.bind(this))
     );
+
 
     render() {
         return (
+
             <div className="container">
                 <div className="row">
                     <div className="col-sm-12">
 
-                        <form onSubmit={this.handleFormSubmit}>
-                            {this.createCheckboxes()}
 
-                            <button className="btn btn-default" type="submit">Save</button>
-                        </form>
+                        {this.createCheckboxes()}
+                        <Link to={{
+                            pathname: '/AcceptBooking',
+                            state: {
+                                selected: this.selectedCheckboxes
+                            }
+                        }}>Accept</Link>
+                    </div>
+                    <div id="names">
 
                     </div>
-                    <div id="total">
 
-                    </div>
                 </div>
             </div>
         );
@@ -66,5 +65,5 @@ class ListOfWords extends Component {
 }
 
 export {
-    ListOfWords,
+    ListOfWorks,
 };
