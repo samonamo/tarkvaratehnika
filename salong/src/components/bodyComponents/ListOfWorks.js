@@ -15,6 +15,16 @@ class ListOfWorks extends Component {
         this.selectedCheckboxes = new Set();
     }
 
+    submit = (event) => {
+
+        fetch('http://localhost:8080/service/price/getlist')
+            .then(response => response.json())
+            .then(data => console.log("Data:" + JSON.stringify(data)));
+
+        event.preventDefault();
+
+
+    };
 
     toggleCheckbox = label => {
 
@@ -53,6 +63,7 @@ class ListOfWorks extends Component {
                                 selected: this.selectedCheckboxes
                             }
                         }}>Accept</Link>
+                        <button type="submit" onClick={this.submit}>Data Getting</button>
                     </div>
                     <div id="names">
 
