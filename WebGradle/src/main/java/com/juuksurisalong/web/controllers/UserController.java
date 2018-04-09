@@ -102,7 +102,7 @@ public class UserController {
 		return role;
 	}
 	
-	@RequestMapping(path="price/getlist", method=RequestMethod.GET, consumes="application/json")
+	@RequestMapping(path="price/getlist", method=RequestMethod.GET)
 	public @ResponseBody Iterable<PriceList> getFullPriceList () {
 		List<PriceList> pricelist = priceListRepository.findAll();
 			if (!pricelist.isEmpty()) {
@@ -110,6 +110,14 @@ public class UserController {
 			}
 			return null;
 	}
+	
+	@RequestMapping(path="price/add", method=RequestMethod.POST, consumes="application/json")
+	public @ResponseBody PriceList addPriceList(@RequestBody PriceList priceList) {
+		//Add price list one tab
+		priceListRepository.save(priceList);
+		return priceList;
+	}
+		
 	
 	private String  hashing(String originalPassword) {
 			return Hashing.sha256().hashString(originalPassword + "kala", StandardCharsets.UTF_8).toString();
