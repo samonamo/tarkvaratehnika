@@ -11,8 +11,8 @@ const updateByPropertyName = (propertyName, value) => () => ({
 });
 
 const INITIAL_STATE = {
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
 };
@@ -39,8 +39,8 @@ class SignUpForm extends Component {
 
     render() {
         const {
-            firstname,
-            lastname,
+            firstName,
+            lastName,
             email,
             password,
         } = this.state;
@@ -50,20 +50,20 @@ class SignUpForm extends Component {
         const isInvalid =
             password === '' ||
             email === '' ||
-            lastname === '' ||
-            firstname === '';
+            lastName === '' ||
+            firstName === '';
 
         return (
             <form onSubmit={this.onSubmit.bind(this)}>
                 <input
-                    value={firstname}
-                    onChange={event => this.setState(updateByPropertyName('firstname', event.target.value))}
+                    value={firstName}
+                    onChange={event => this.setState(updateByPropertyName('firstName', event.target.value))}
                     type="text"
                     placeholder="Enter your firstname"
                 />
                 <input
-                    value={lastname}
-                    onChange={event => this.setState(updateByPropertyName('lastname', event.target.value))}
+                    value={lastName}
+                    onChange={event => this.setState(updateByPropertyName('lastName', event.target.value))}
                     type="text"
                     placeholder="Enter your lastname"
                 />
