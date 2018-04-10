@@ -12,12 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.hash.Hashing;
-import com.juuksurisalong.web.data.PriceList;
-import com.juuksurisalong.web.data.Role;
 import com.juuksurisalong.web.data.User;
-import com.juuksurisalong.web.repositories.RoleRepository;
 import com.juuksurisalong.web.repositories.UserRepository;
-import com.juuksurisalong.web.repositories.PriceListRepository;
 
 
 @Controller
@@ -25,10 +21,12 @@ import com.juuksurisalong.web.repositories.PriceListRepository;
 public class UserController {
 	@Autowired 
 	private UserRepository userRepository;
-	@Autowired
-	private RoleRepository roleRepository;
-	@Autowired
-	private PriceListRepository priceListRepository;
+
+	
+	public UserController(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
 
 	@RequestMapping(path="users/{id}", method=RequestMethod.GET)
 	public @ResponseBody User getUserById(@PathVariable("id") long id) {
@@ -94,31 +92,7 @@ public class UserController {
 		}
 		
 	}
-
-	@RequestMapping(path="roles/add", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody Role addRole(@RequestBody Role role) {
-		//Add role (client/worker)
-		roleRepository.save(role);
-		return role;
-	}
-	
-	@RequestMapping(path="price/getlist", method=RequestMethod.GET)
-	public @ResponseBody Iterable<PriceList> getFullPriceList () {
-		List<PriceList> pricelist = priceListRepository.findAll();
-			if (!pricelist.isEmpty()) {
-				return pricelist;
-			}
-			return null;
-	}
-	
-	@RequestMapping(path="price/add", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody PriceList addPriceList(@RequestBody PriceList priceList) {
-		//Add price list one tab
-		priceListRepository.save(priceList);
-		return priceList;
-	}
-		
-	
+			
 	private String  hashing(String originalPassword) {
 			return Hashing.sha256().hashString(originalPassword + "kala", StandardCharsets.UTF_8).toString();
 	}
