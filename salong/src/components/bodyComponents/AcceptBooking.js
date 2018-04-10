@@ -19,7 +19,8 @@ class AcceptBooking extends Component {
                 {[...selected].map((checkbox) => {
                     return (
                         <tr>
-                            <th>{checkbox}</th>
+                            <th>{checkbox.name}{checkbox.length}{checkbox.price}</th>
+                            {console.log(checkbox)}
                         </tr>
                     )
                 })}

@@ -2,29 +2,21 @@ import React, {Component} from 'react';
 import Checkbox from "../helpClasses/CheckBox";
 import {Link} from "react-router-dom";
 
-
-const items = [
-    'Lõikus',
-    'Värvimine',
-    'Soeng',
-];
-
 class ListOfWorks extends Component {
     constructor(props) {
         super(props);
         this.selectedCheckboxes = new Set();
+
+        this.state = {
+            data: [],
+        };
     }
 
-    submit = (event) => {
-
+    componentWillMount() {
         fetch('http://localhost:8080/service/price/getlist')
             .then(response => response.json())
-            .then(data => console.log("Data:" + JSON.stringify(data)));
-
-        event.preventDefault();
-
-
-    };
+            .then(data => this.setState({data: data}));
+    }
 
     toggleCheckbox = label => {
 
@@ -35,17 +27,22 @@ class ListOfWorks extends Component {
         }
     };
 
-    createCheckbox = label => (
-        <Checkbox
-            label={label}
-            handleCheckboxChange={this.toggleCheckbox.bind(this)}
-            key={label}
-        />
-    );
+    createCheckboxes() {
+        const {data} = this.state;
 
-    createCheckboxes = () => (
-        items.map(this.createCheckbox.bind(this))
-    );
+        return data.map((work) =>
+            <Checkbox
+                data={work}
+                handleCheckboxChange={this.toggleCheckbox.bind(this)}
+                key={work.listedWorkID}
+            />
+        )
+    };
+
+    submit = event => {
+        event.preventDefault();
+        console.log(this.selectedCheckboxes)
+    };
 
 
     render() {
@@ -55,16 +52,17 @@ class ListOfWorks extends Component {
                 <div className="row">
                     <div className="col-sm-12">
 
-
                         {this.createCheckboxes()}
+
                         <Link to={{
                             pathname: '/AcceptBooking',
                             state: {
                                 selected: this.selectedCheckboxes
                             }
                         }}>Accept</Link>
-                        <button type="submit" onClick={this.submit}>Data Getting</button>
+                        <button type="submit" onClick={this.submit.bind(this)}>Data Getting</button>
                     </div>
+
                     <div id="names">
 
                     </div>

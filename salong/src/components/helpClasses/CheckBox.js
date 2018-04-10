@@ -6,7 +6,7 @@ class Checkbox extends Component {
     };
 
     toggleCheckboxChange = () => {
-        const {handleCheckboxChange, label} = this.props;
+        const {handleCheckboxChange, data} = this.props;
 
         this.setState(({isChecked}) => (
             {
@@ -14,11 +14,11 @@ class Checkbox extends Component {
             }
         ));
 
-        handleCheckboxChange(label);
+        handleCheckboxChange(data);
     };
 
     render() {
-        const {label} = this.props;
+        const {data} = this.props;
         const {isChecked} = this.state;
 
         return (
@@ -26,12 +26,11 @@ class Checkbox extends Component {
                 <label>
                     <input
                         type="checkbox"
-                        value={label}
+                        value={data.name}
                         checked={isChecked}
                         onChange={this.toggleCheckboxChange}
                     />
-
-                    {label}
+                    {data.name} ,kestvus {data.length} min, hind {data.price} €
                 </label>
             </div>
         );
