@@ -1,30 +1,75 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+
+let times = ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
+let array = [];
 
 class AcceptBooking extends Component {
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            bookings: [],
+        };
+    }
+
+    iterateOverArray() {
+        this.state.bookings.map((booking,) =>
+            array.push([...times.slice(0, times.indexOf(booking.startingTime)),
+                ...times.slice(times.indexOf(booking.endTime) + 1)
+            ])
+        )
+    }
+
+    onPress() {
+
+        ReactDOM.render([...array.slice(-1)[0]].map((item, index) => {
+            return <div key={index}>{item}</div>
+        }), document.getElementById("free"))
+    }
+
+
+    componentWillMount() {
+
+        fetch('http://localhost:8080/service/booking/getbookings')
+            .then(response => response.json())
+            .then(data => this.setState({bookings: data}));
+    }
 
     render() {
         const {selected} = this.props.location.state;
+
         return (
             <div>
                 <h1>Accept Booking</h1>
-                <thead>
-                <tr>
-                    <th>
-                        Is that right ?
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {[...selected].map((checkbox) => {
-                    return (
-                        <tr>
-                            <th>{checkbox.name}{checkbox.length}{checkbox.price}</th>
-                            {console.log(checkbox)}
-                        </tr>
-                    )
-                })}
-                </tbody>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>
+                            Is that right ?
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {[...selected].map((checkbox, index) => {
+                        return (
+                            <tr key={index}>
+                                <th>{checkbox.name} {checkbox.length} {checkbox.price}</th>
+                            </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
+
+                <div>
+                    {this.iterateOverArray()}
+
+                    <button onClick={this.onPress}>Free times</button>
+                </div>
+
+                <div id="free">
+                </div>
+
             </div>
         );
     }
