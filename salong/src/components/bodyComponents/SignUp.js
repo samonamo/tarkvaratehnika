@@ -11,8 +11,11 @@ const updateByPropertyName = (propertyName, value) => () => ({
 });
 
 const INITIAL_STATE = {
+    firstname: '',
+    lastname: '',
     email: '',
     password: '',
+    passwordTwo: '',
 };
 
 class SignUpForm extends Component {
@@ -35,28 +38,36 @@ class SignUpForm extends Component {
 
     render() {
         const {
+            firstname,
+            lastname,
             email,
             password,
+            passwordTwo,
         } = this.state;
 
         const isInvalid =
+            
+          
+            passwordTwo === '' ||
             password === '' ||
-            email === '';
+            email === '' ||
+            lastname === '' ||
+            firstname === '';
 
         return (
             <form onSubmit={this.onSubmit.bind(this)}>
-                {/*<input*/}
-                    {/*value={firstname}*/}
-                    {/*onChange={event => this.setState(updateByPropertyName('firstname', event.target.value))}*/}
-                    {/*type="text"*/}
-                    {/*placeholder="Enter your firstname"*/}
-                {/*/>*/}
-                {/*<input*/}
-                    {/*value={lastname}*/}
-                    {/*onChange={event => this.setState(updateByPropertyName('lastname', event.target.value))}*/}
-                    {/*type="text"*/}
-                    {/*placeholder="Enter your lastname"*/}
-                {/*/>*/}
+                <input
+                    value={firstname}
+                    onChange={event => this.setState(updateByPropertyName('firstname', event.target.value))}
+                    type="text"
+                    placeholder="Enter your firstname"
+                />
+                <input
+                    value={lastname}
+                    onChange={event => this.setState(updateByPropertyName('lastname', event.target.value))}
+                    type="text"
+                    placeholder="Enter your lastname"
+                />
                 <input
                     value={email}
                     onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
@@ -69,12 +80,12 @@ class SignUpForm extends Component {
                     type="password"
                     placeholder="Password"
                 />
-                {/*<input*/}
-                    {/*value={passwordTwo}*/}
-                    {/*onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}*/}
-                    {/*type="password"*/}
-                    {/*placeholder="Repeat password"*/}
-                {/*/>*/}
+                <input
+                    value={passwordTwo}
+                    onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
+                    type="password"
+                    placeholder="Repeat password"
+                />
                 <button disabled={isInvalid} type="submit">
                     Sign Up
                 </button>
