@@ -22,7 +22,7 @@ class SignInForm extends Component {
     }
 
     onSubmit = (event) => {
-        console.log("Tahan saat:" + JSON.stringify(this.state));
+
         fetch('http://localhost:8080/service/login', {
             method : 'POST',
             headers: {
@@ -33,7 +33,7 @@ class SignInForm extends Component {
             .then(data => console.log("Data:" + data)
             );
         event.preventDefault();
-        console.log("Method executed!")
+
 
     };
 
