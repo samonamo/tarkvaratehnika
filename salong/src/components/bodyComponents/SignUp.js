@@ -15,25 +15,26 @@ const INITIAL_STATE = {
     lastname: '',
     email: '',
     password: '',
-    passwordTwo: '',
 };
 
 class SignUpForm extends Component {
     constructor(props) {
         super(props);
-
         this.state = {...INITIAL_STATE};
     }
 
-    onSubmit = () => {
-        fetch('https://localhost:8080/service/users/register', {
+    onSubmit = (event) => {
+
+        fetch('http://localhost:8080/service/users/register', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: this.state
-        }).then(response => console.log(JSON.stringify(response)))
+                'Content-Type': 'application/json'},
+            body: JSON.stringify(this.state)})
+            .then(response => response.json())
+            .then(data => console.log("Data:" + JSON.stringify(data)));
+
+        event.preventDefault();
     };
 
     render() {
@@ -42,13 +43,11 @@ class SignUpForm extends Component {
             lastname,
             email,
             password,
-            passwordTwo,
         } = this.state;
 
+
+
         const isInvalid =
-            
-          
-            passwordTwo === '' ||
             password === '' ||
             email === '' ||
             lastname === '' ||
@@ -80,12 +79,7 @@ class SignUpForm extends Component {
                     type="password"
                     placeholder="Password"
                 />
-                <input
-                    value={passwordTwo}
-                    onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
-                    type="password"
-                    placeholder="Repeat password"
-                />
+
                 <button disabled={isInvalid} type="submit">
                     Sign Up
                 </button>
