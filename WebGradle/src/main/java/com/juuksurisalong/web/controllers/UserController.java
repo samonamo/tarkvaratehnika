@@ -29,6 +29,13 @@ public class UserController {
 	private RoleRepository roleRepository;
 	@Autowired
 	private PriceListRepository priceListRepository;
+	
+	public UserController(UserRepository userRepository, RoleRepository roleRepository, PriceListRepository priceListRepository) {
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+		this.priceListRepository = priceListRepository;
+	}
+
 
 	@RequestMapping(path="users/{id}", method=RequestMethod.GET)
 	public @ResponseBody User getUserById(@PathVariable("id") long id) {
