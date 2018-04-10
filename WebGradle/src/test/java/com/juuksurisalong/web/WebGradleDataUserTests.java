@@ -3,6 +3,8 @@ package com.juuksurisalong.web;
 import static org.junit.Assert.*;
 
 import java.util.Objects;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import com.juuksurisalong.web.data.Role;
@@ -11,8 +13,14 @@ import com.juuksurisalong.web.data.User;
 public class WebGradleDataUserTests {
 
 	
-	private User newUser = new User();
-	private Role newRole = new Role();
+	private User newUser;
+	private Role newRole;
+	
+	@Before
+	public void setUp() {
+		newUser = new User();
+		newRole = new Role();
+	}
 	
 	@Test
 	public void testIfCorrectFirstNameIsReturned() {

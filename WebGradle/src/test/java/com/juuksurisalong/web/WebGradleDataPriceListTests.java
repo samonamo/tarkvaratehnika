@@ -4,13 +4,19 @@ import static org.junit.Assert.*;
 
 import java.util.Objects;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.juuksurisalong.web.data.PriceList;
 
 public class WebGradleDataPriceListTests {
 
-	private PriceList newPriceList = new PriceList();
+	private PriceList newPriceList;
+	
+	@Before 
+	public void setUp() {
+		newPriceList = new PriceList();
+	}
 	
 	@Test
 	public void testIfCorrectNameIsReturned() {
