@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 let times = ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
 let array = [];
+let helpArray = [];
 
 class AcceptBooking extends Component {
     constructor(props) {
@@ -14,16 +15,30 @@ class AcceptBooking extends Component {
     }
 
     iterateOverArray() {
-        this.state.bookings.map((booking,) =>
-            array.push([...times.slice(0, times.indexOf(booking.startingTime)),
-                ...times.slice(times.indexOf(booking.endTime) + 1)
-            ])
-        )
+        this.state.bookings.map((booking) => {
+                let help = [...times.slice(0, times.indexOf(booking.startingTime)),
+                    ...times.slice(times.indexOf(booking.endTime) + 1)
+                ];
+                console.log(help);
+                times.forEach((item) =>
+                    {
+                        if(help.indexOf(item) === -1){
+                            helpArray.push(item)
+                        }
+                    }
+                )
+
+            }
+        );
+
+        times = times.filter(val => !helpArray.includes(val))
+
+
     }
 
     onPress() {
 
-        ReactDOM.render([...array.slice(-1)[0]].map((item, index) => {
+        ReactDOM.render(times.map((item, index) => {
             return <div key={index}>{item}</div>
         }), document.getElementById("free"))
     }
