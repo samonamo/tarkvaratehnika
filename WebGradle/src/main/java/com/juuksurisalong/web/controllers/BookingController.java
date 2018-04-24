@@ -23,7 +23,7 @@ public class BookingController {
 	}
 	
 	@RequestMapping(path="booking/getbookings", method=RequestMethod.GET)
-	public @ResponseBody List<Booking> getAllBookings () {
+	public @ResponseBody List<Booking> getAllBookings() {
 		List<Booking> bookings = bookingRepository.findAll();
 		if (!bookings.isEmpty()) {
 			return bookings;
