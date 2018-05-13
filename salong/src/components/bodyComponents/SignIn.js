@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 const SignInPage = () =>
     <div>
         <h1>SignIn</h1>
-        <SignInForm />
+        <SignInForm/>
     </div>;
 
 const updateByPropertyName = (propertyName, value) => () => ({
@@ -24,13 +24,15 @@ class SignInForm extends Component {
     onSubmit = (event) => {
 
         fetch('http://localhost:8080/service/login', {
-            method : 'POST',
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'},
-            body : JSON.stringify(this.state)})
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state)
+        })
             .then(response => response.json())
-            .then(data => console.log("Data:" + data)
+            .then(data => console.log("Data:" + JSON.stringify(data))
             );
         event.preventDefault();
 

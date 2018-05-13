@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Checkbox from "../helpClasses/CheckBox";
 import {Link} from "react-router-dom";
 
+
 class ListOfWorks extends Component {
     constructor(props) {
         super(props);
@@ -39,12 +40,6 @@ class ListOfWorks extends Component {
         )
     };
 
-    submit = event => {
-        event.preventDefault();
-        console.log(this.selectedCheckboxes)
-    };
-
-
     render() {
         return (
 
@@ -60,11 +55,9 @@ class ListOfWorks extends Component {
                                 selected: this.selectedCheckboxes
                             }
                         }}>Accept</Link>
-                        <button type="submit" onClick={this.submit.bind(this)}>Data Getting</button>
                     </div>
 
                     <div id="names">
-
                     </div>
 
                 </div>
@@ -74,5 +67,5 @@ class ListOfWorks extends Component {
 }
 
 export {
-    ListOfWorks,
+    ListOfWorks
 };

@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
 import SignIn from "./components/bodyComponents/SignIn";
 import SignUp from "./components/bodyComponents/SignUp";
-import {Link, Route, BrowserRouter as Router} from "react-router-dom";
+import {BrowserRouter as Router, Link, Route} from "react-router-dom";
 import './Css.css';
 import {ListOfWorks} from "./components/bodyComponents/ListOfWorks";
 import AcceptBooking from "./components/bodyComponents/AcceptBooking";
+import Basic from "./components/helpClasses/Calendar";
 
 
 const Home = () => (
     <div className="Homepage">
         <h2>Juuksurisalong</h2>
         <ListOfWorks/>
+        <Basic />
     </div>
 );
 

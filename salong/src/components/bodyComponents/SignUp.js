@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 const SignUpPage = () =>
     <div>
         <h1>SignUp</h1>
-        <SignUpForm />
+        <SignUpForm/>
     </div>;
 
 const updateByPropertyName = (propertyName, value) => () => ({
@@ -29,8 +29,10 @@ class SignUpForm extends Component {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'},
-            body: JSON.stringify(this.state)})
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state)
+        })
             .then(response => response.json())
             .then(data => console.log("Data:" + JSON.stringify(data)));
 
@@ -44,7 +46,6 @@ class SignUpForm extends Component {
             email,
             password,
         } = this.state;
-
 
 
         const isInvalid =
