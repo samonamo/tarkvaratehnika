@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Checkbox from "../helpClasses/CheckBox";
+import Checkbox from "../helpComponents/CheckBox";
 import {Link} from "react-router-dom";
 
 

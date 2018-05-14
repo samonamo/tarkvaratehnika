@@ -1,78 +1,103 @@
-import React, {Component} from 'react';
-
-const SignInPage = () =>
-    <div>
-        <h1>SignIn</h1>
-        <SignInForm/>
-    </div>;
-
-const updateByPropertyName = (propertyName, value) => () => ({
-    [propertyName]: value,
-});
-
-const INITIAL_STATE = {
-    email: '',
-    password: '',
-};
+import React, {Component} from "react";
+import TextField from "material-ui/TextField";
+import RaisedButton from "material-ui/RaisedButton";
 
 class SignInForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {...INITIAL_STATE};
-    }
 
-    onSubmit = (event) => {
+    state = {
+        email: '',
+        emailError: '',
+        password: '',
+        passwordError: '',
+        validError : ''
+    };
 
-        fetch('http://localhost:8080/service/login', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.state)
-        })
-            .then(response => response.json())
-            .then(data => console.log("Data:" + JSON.stringify(data))
-            );
+    change = event => {
+        this.props.onChange({[event.target.name]: event.target.value});
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    };
+
+    validate = () => {
+        let isError = false;
+        const errors = {
+            emailError: "",
+            passwordError: ""
+        };
+
+        if (this.state.email.indexOf("@") === -1) {
+            isError = true;
+            errors.emailError = "Requires valid email.";
+        }
+
+        this.setState({
+            ...this.state,
+            ...errors
+        });
+
+        return isError;
+    };
+
+    onSubmit = event => {
         event.preventDefault();
 
+        const err = this.validate();
+        if (!err) {
+            fetch('http://localhost:8080/service/login', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.state)
+            })
+                .then(response => response.json())
+                .then(data => console.log("Data:" + JSON.stringify(data))
+                );
+            event.preventDefault();
+        }
 
     };
 
     render() {
         const {
             email,
-            password,
+            password
         } = this.state;
 
+
         const isInvalid =
-            password === '' ||
-            email === '';
+            email === '' ||
+            password === '';
 
         return (
-            <form onSubmit={this.onSubmit.bind(this)}>
-                <input
-                    value={email}
-                    onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-                    type="text"
-                    placeholder="Email Address"
+            <form>
+                <TextField
+                    name="email"
+                    hintText="Email"
+                    floatingLabelText="Email"
+                    value={this.state.email}
+                    onChange={e => this.change(e)}
+                    errorText={this.state.emailError}
+                    floatingLabelFixed
                 />
-                <input
-                    value={password}
-                    onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
+                <br/>
+                <TextField
+                    name="password"
+                    hintText="Password"
+                    floatingLabelText="Password"
+                    value={this.state.password}
+                    onChange={e => this.change(e)}
+                    errorText={this.state.passwordError}
                     type="password"
-                    placeholder="Password"
+                    floatingLabelFixed
                 />
-                <button disabled={isInvalid} type="submit">
-                    Sign In
-                </button>
+                <br/>
+                <RaisedButton disabled={isInvalid} label="Submit" onClick={e => this.onSubmit(e)} primary/>
             </form>
         );
     }
 }
 
-export default SignInPage;
-
-export {
-    SignInForm,
-};
+export default SignInForm;
