@@ -20,13 +20,40 @@ public class Booking {
 	@GeneratedValue
 	long bookingId;
 	
-	@NotNull
 	String reservationDescription;
-	String userName;
+	String userID;
+	@NotNull
 	String startingTime;
 	String endTime;
 	String price;
+	String month;
+	String year;
+	String day;
 	
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
 	public void setReservationDescription(Array reservationDescription) {
 		this.reservationDescription = reservationDescription.toString();
 	}
