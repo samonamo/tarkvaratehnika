@@ -1,42 +1,84 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
+import TextField from "material-ui/TextField";
+import RaisedButton from "material-ui/RaisedButton";
 
-const SignUpPage = () =>
-    <div>
-        <h1>SignUp</h1>
-        <SignUpForm/>
-    </div>;
-
-const updateByPropertyName = (propertyName, value) => () => ({
-    [propertyName]: value,
-});
-
-const INITIAL_STATE = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-};
+const hasNumber = /\d/;
 
 class SignUpForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {...INITIAL_STATE};
-    }
+    state = {
+        firstName: "",
+        firstNameError: "",
+        lastName: "",
+        lastNameError: "",
+        email: "",
+        emailError: "",
+        password: "",
+        passwordError: "",
+        secondPassword: "",
+        secondPasswordError: "",
+    };
 
-    onSubmit = (event) => {
+    change = event => {
+        this.props.onChange({[event.target.name]: event.target.value});
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    };
 
-        fetch('http://localhost:8080/service/users/register', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.state)
-        })
-            .then(response => response.json())
-            .then(data => console.log("Data:" + JSON.stringify(data)));
+    validate = () => {
+        let isError = false;
+        const errors = {
+            firstNameError: "",
+            lastNameError: "",
+            emailError: "",
+            passwordError: ""
+        };
 
+        if (this.state.firstName.length < 1) {
+            isError = true;
+            errors.firstnameError = "First name cant be empty";
+        }
+
+        if (this.state.lastName.length < 5) {
+            isError = true;
+            errors.lastNameError = "Last name must be 6 symbol length";
+        }else if(hasNumber.test(this.state.lastName)){
+            isError = true;
+            errors.lastNameError = "Last name can't contain numbers";
+        }
+
+        if (this.state.email.indexOf("@") === -1) {
+            isError = true;
+            errors.emailError = "Requires valid email";
+        }
+
+        this.setState({
+            ...this.state,
+            ...errors
+        });
+
+        return isError;
+    };
+
+    onSubmit = event => {
         event.preventDefault();
+
+        const err = this.validate();
+        if (!err) {
+            fetch('http://localhost:8080/service/users/register', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.state)
+            })
+                .then(response => response.json())
+                .then(data => console.log("Data:" + JSON.stringify(data)));
+
+            event.preventDefault();
+        }
+
     };
 
     render() {
@@ -45,6 +87,7 @@ class SignUpForm extends Component {
             lastName,
             email,
             password,
+            secondPassword,
         } = this.state;
 
 
@@ -52,45 +95,57 @@ class SignUpForm extends Component {
             password === '' ||
             email === '' ||
             lastName === '' ||
-            firstName === '';
+            firstName === '' ||
+            password === secondPassword;
 
         return (
-            <form onSubmit={this.onSubmit.bind(this)}>
-                <input
-                    value={firstName}
-                    onChange={event => this.setState(updateByPropertyName('firstName', event.target.value))}
-                    type="text"
-                    placeholder="Enter your firstname"
+            <form>
+                <TextField
+                    name="firstName"
+                    hintText="First name"
+                    floatingLabelText="First name"
+                    value={this.state.firstName}
+                    onChange={e => this.change(e)}
+                    errorText={this.state.firstNameError}
+                    floatingLabelFixed
                 />
-                <input
-                    value={lastName}
-                    onChange={event => this.setState(updateByPropertyName('lastName', event.target.value))}
-                    type="text"
-                    placeholder="Enter your lastname"
+                <br/>
+                <TextField
+                    name="lastName"
+                    hintText="Last Name"
+                    floatingLabelText="Last Name"
+                    value={this.state.lastName}
+                    onChange={e => this.change(e)}
+                    errorText={this.state.lastNameError}
+                    floatingLabelFixed
                 />
-                <input
-                    value={email}
-                    onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-                    type="text"
-                    placeholder="Email Address"
+                <br/>
+                <TextField
+                    name="email"
+                    hintText="Email"
+                    floatingLabelText="Email"
+                    value={this.state.email}
+                    onChange={e => this.change(e)}
+                    errorText={this.state.emailError}
+                    floatingLabelFixed
                 />
-                <input
-                    value={password}
-                    onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
+                <br/>
+                <TextField
+                    name="password"
+                    hintText="Password"
+                    floatingLabelText="Password"
+                    value={this.state.password}
+                    onChange={e => this.change(e)}
+                    errorText={this.state.passwordError}
                     type="password"
-                    placeholder="Password"
+                    floatingLabelFixed
                 />
-
-                <button disabled={isInvalid} type="submit">
-                    Sign Up
-                </button>
+                <br/>
+                <RaisedButton disabled={isInvalid} label="Submit" onClick={e => this.onSubmit(e)} primary/>
             </form>
         );
     }
 }
 
-export default SignUpPage;
+export default SignUpForm;
 
-export {
-    SignUpForm,
-};
