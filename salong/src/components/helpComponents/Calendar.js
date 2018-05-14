@@ -1,6 +1,5 @@
 import React from 'react';
 import BigCalendar from 'react-big-calendar';
-import events from './events';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
@@ -21,7 +20,6 @@ const Basic = () => (
     <div style={{height: 500, width: 700}}>
         <BigCalendar
             formats={formats}
-            events={events}
             step={30}
             views={allViews}
             min={minTime}

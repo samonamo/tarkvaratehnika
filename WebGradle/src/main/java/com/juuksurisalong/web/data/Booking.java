@@ -58,10 +58,6 @@ public class Booking {
 		this.reservationDescription = reservationDescription.toString();
 	}
 	
-	public void setUserName(String firstName, String lastName) {
-		this.userName = firstName + " " + lastName;
-	}
-	
 	public void setPrice(String price) {
 		this.price = price;
 	}
@@ -72,10 +68,6 @@ public class Booking {
 
 	public String getReservationDescription() {
 		return reservationDescription;
-	}
-	
-	public String getUserName() {
-		return userName;
 	}
 	
 	public String getPrice() {

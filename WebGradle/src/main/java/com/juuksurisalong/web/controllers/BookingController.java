@@ -33,6 +33,7 @@ public class BookingController {
 	
 	@RequestMapping(path="booking/add", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody Booking addBooking(@RequestBody Booking booking) {
+		
 		bookingRepository.save(booking);
 		return booking;
 	}

@@ -5,11 +5,13 @@ import AcceptBooking from "./components/bodyComponents/AcceptBooking";
 import SignUpLayout from "./components/helpComponents/SignUpLayout";
 import SignInLayout from "./components/helpComponents/SignInLayout";
 import {ListOfWorks} from "./components/bodyComponents/ListOfWorks";
+import Events from "./components/helpComponents/Events";
 
 
 const Home = () => (
     <div className="Homepage">
         <h2>Juuksurisalong</h2>
+        <Events/>
     </div>
 );
 
