@@ -23,9 +23,6 @@ class SignInLayout extends Component {
                 <MuiThemeProvider>
                     <div className="App">
                         <SignInForm onChange={fields => this.onChange(fields)} />
-                        <p>
-                            {JSON.stringify(this.state.fields, null, 2)}
-                        </p>
                     </div>
                 </MuiThemeProvider>
             </div>

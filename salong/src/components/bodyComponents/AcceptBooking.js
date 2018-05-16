@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Events from "../helpComponents/Events";
-import './Bookings.css';
+import './Body.css';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as Constants from "../../constants/Constants";

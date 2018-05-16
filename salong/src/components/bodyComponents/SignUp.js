@@ -41,7 +41,7 @@ class SignUpForm extends Component {
             errors.firstnameError = "First name can't contain numbers";
         }
 
-        if(hasNumber.test(this.state.lastName)){
+        if (hasNumber.test(this.state.lastName)) {
             isError = true;
             errors.lastNameError = "Last name can't contain numbers";
         }
@@ -73,13 +73,13 @@ class SignUpForm extends Component {
                 body: JSON.stringify(this.state)
             })
                 .then(response => response.json())
-                .then(data =>{
+                .then(data => {
                     if (data.password !== this.state.password) {
                         this.setState({registerSuccess: true});
                     }
                 }).catch(error => {
-                    console.log(error)
-                    alert(error)});
+                alert(error)
+            });
 
             event.preventDefault();
         }
@@ -107,50 +107,52 @@ class SignUpForm extends Component {
             return <Redirect to="/SignIn"/>;
 
         return (
-            <form>
-                <TextField
-                    name="firstName"
-                    hintText="First name"
-                    floatingLabelText="First name"
-                    value={this.state.firstName}
-                    onChange={e => this.change(e)}
-                    errorText={this.state.firstNameError}
-                    floatingLabelFixed
-                />
-                <br/>
-                <TextField
-                    name="lastName"
-                    hintText="Last Name"
-                    floatingLabelText="Last Name"
-                    value={this.state.lastName}
-                    onChange={e => this.change(e)}
-                    errorText={this.state.lastNameError}
-                    floatingLabelFixed
-                />
-                <br/>
-                <TextField
-                    name="email"
-                    hintText="Email"
-                    floatingLabelText="Email"
-                    value={this.state.email}
-                    onChange={e => this.change(e)}
-                    errorText={this.state.emailError}
-                    floatingLabelFixed
-                />
-                <br/>
-                <TextField
-                    name="password"
-                    hintText="Password"
-                    floatingLabelText="Password"
-                    value={this.state.password}
-                    onChange={e => this.change(e)}
-                    errorText={this.state.passwordError}
-                    type="password"
-                    floatingLabelFixed
-                />
-                <br/>
-                <RaisedButton disabled={isInvalid} label="Submit" onClick={e => this.onSubmit(e)} primary/>
-            </form>
+            <div className="container2">
+                <form>
+                    <TextField
+                        name="firstName"
+                        hintText="First name"
+                        floatingLabelText="First name"
+                        value={this.state.firstName}
+                        onChange={e => this.change(e)}
+                        errorText={this.state.firstNameError}
+                        floatingLabelFixed
+                    />
+                    <br/>
+                    <TextField
+                        name="lastName"
+                        hintText="Last Name"
+                        floatingLabelText="Last Name"
+                        value={this.state.lastName}
+                        onChange={e => this.change(e)}
+                        errorText={this.state.lastNameError}
+                        floatingLabelFixed
+                    />
+                    <br/>
+                    <TextField
+                        name="email"
+                        hintText="Email"
+                        floatingLabelText="Email"
+                        value={this.state.email}
+                        onChange={e => this.change(e)}
+                        errorText={this.state.emailError}
+                        floatingLabelFixed
+                    />
+                    <br/>
+                    <TextField
+                        name="password"
+                        hintText="Password"
+                        floatingLabelText="Password"
+                        value={this.state.password}
+                        onChange={e => this.change(e)}
+                        errorText={this.state.passwordError}
+                        type="password"
+                        floatingLabelFixed
+                    />
+                    <br/>
+                    <RaisedButton disabled={isInvalid} label="Submit" onClick={e => this.onSubmit(e)} primary/>
+                </form>
+            </div>
         );
     }
 }

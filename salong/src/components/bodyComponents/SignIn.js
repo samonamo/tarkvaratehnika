@@ -5,6 +5,7 @@ import * as Constants from "../../constants/Constants";
 import {Redirect} from "react-router-dom";
 import {bindActionCreators} from "redux";
 import {connect} from 'react-redux';
+import './Body.css';
 
 const mapStateToProps = state => {
     return {
@@ -29,7 +30,7 @@ class SignInForm extends Component {
         emailError: '',
         password: '',
         passwordError: '',
-        validError : '',
+        validError: '',
         loggedIn: false
     };
 
@@ -73,7 +74,9 @@ class SignInForm extends Component {
                 },
                 body: JSON.stringify(this.state)
             })
-                .then(response => {return response.json()})
+                .then(response => {
+                    return response.json()
+                })
                 .then(data => {
                     if (data.email !== null) {
                         this.props.actions.login({email: this.state.email});
@@ -100,30 +103,32 @@ class SignInForm extends Component {
             return <Redirect to="/"/>
 
         return (
-            <form>
-                <TextField
-                    name="email"
-                    hintText="Email"
-                    floatingLabelText="Email"
-                    value={this.state.email}
-                    onChange={e => this.change(e)}
-                    errorText={this.state.emailError}
-                    floatingLabelFixed
-                />
-                <br/>
-                <TextField
-                    name="password"
-                    hintText="Password"
-                    floatingLabelText="Password"
-                    value={this.state.password}
-                    onChange={e => this.change(e)}
-                    errorText={this.state.passwordError}
-                    type="password"
-                    floatingLabelFixed
-                />
-                <br/>
-                <RaisedButton disabled={isInvalid} label="Submit" onClick={this.loginHandler} primary/>
-            </form>
+            <div className="container2">
+                <form>
+                    <TextField
+                        name="email"
+                        hintText="Email"
+                        floatingLabelText="Email"
+                        value={this.state.email}
+                        onChange={e => this.change(e)}
+                        errorText={this.state.emailError}
+                        floatingLabelFixed
+                    />
+                    <br/>
+                    <TextField
+                        name="password"
+                        hintText="Password"
+                        floatingLabelText="Password"
+                        value={this.state.password}
+                        onChange={e => this.change(e)}
+                        errorText={this.state.passwordError}
+                        type="password"
+                        floatingLabelFixed
+                    />
+                    <br/>
+                    <RaisedButton disabled={isInvalid} label="Submit" onClick={this.loginHandler} primary/>
+                </form>
+            </div>
         );
     }
 }
