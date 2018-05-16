@@ -1,13 +1,26 @@
 import React, {Component} from 'react';
 import Checkbox from "../helpComponents/CheckBox";
 import {Link} from "react-router-dom";
+import * as Constants from "../../constants/Constants";
+import {Redirect} from "react-router-dom";
+import {bindActionCreators} from "redux";
+import {connect} from 'react-redux';
 
+const mapStateToProps = state => {
+    return {
+        selectedCheckboxes: state.selectedCheckboxes,
+    }
+};
 
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators(Constants, dispatch),
+    }
+};
 
 class ListOfWorks extends Component {
     constructor(props) {
-        super(props);
-        this.selectedCheckboxes = new Set();
+        super();
 
         this.state = {
             data: [],
@@ -21,11 +34,11 @@ class ListOfWorks extends Component {
     }
 
     toggleCheckbox = label => {
-
-        if (this.selectedCheckboxes.has(label)) {
-            this.selectedCheckboxes.delete(label);
+        console.log(this.props.selectedCheckboxes)
+        if (this.props.selectedCheckboxes.has(label)) {
+            this.props.selectedCheckboxes.delete(label);
         } else {
-            this.selectedCheckboxes.add(label);
+            this.props.selectedCheckboxes.add(label);
         }
     };
 
@@ -53,12 +66,7 @@ class ListOfWorks extends Component {
 
                         {this.createCheckboxes()}
 
-                        <Link to={{
-                            pathname: '/AcceptBooking',
-                            state: {
-                                selected: this.selectedCheckboxes
-                            }
-                        }}>Accept</Link>
+                        <Link to="/AcceptBooking">Accept</Link>
                     </div>
 
                     <div id="names">
@@ -70,6 +78,4 @@ class ListOfWorks extends Component {
     }
 }
 
-export {
-    ListOfWorks
-};
+export default connect(mapStateToProps, mapDispatchToProps)(ListOfWorks);

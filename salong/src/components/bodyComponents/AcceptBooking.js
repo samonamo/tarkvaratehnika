@@ -1,8 +1,24 @@
 import React, {Component} from 'react';
 import Events from "../helpComponents/Events";
+import * as Constants from "../../constants/Constants";
+import {Redirect} from "react-router-dom";
+import {bindActionCreators} from "redux";
+import {connect} from 'react-redux';
 
 let times = ["8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
 let helpArray = [];
+
+const mapStateToProps = state => {
+    return {
+        selectedCheckboxes: state.selectedCheckboxes,
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators(Constants, dispatch),
+    }
+};
 
 class AcceptBooking extends Component {
     constructor() {
@@ -94,6 +110,7 @@ class AcceptBooking extends Component {
     }
 
     onSubmit = event => {
+        event.preventDefault();
         console.log(JSON.stringify(this.state));
         fetch('http://localhost:8080/service/booking/test', {
             method: 'POST',
@@ -106,14 +123,12 @@ class AcceptBooking extends Component {
             .then(response => response.json())
             .then(data => console.log("Data:" + JSON.stringify(data)));
 
-        event.preventDefault();
-
-
     };
 
     render() {
-        const {selected} = this.props.location.state;
-        const inValid = selected.size === 0;
+
+        const inValid = this.props.selectedCheckboxes.size === 0;
+        console.log(this.props.selectedCheckboxes);
 
         let something = this.state.value;
 
@@ -131,7 +146,7 @@ class AcceptBooking extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {[...selected].map((checkbox, index) => {
+                    {[...this.props.selectedCheckboxes].map((checkbox, index) => {
                         return (
                             <tr key={index}>
                                 <th>{checkbox.name}, kestvus {checkbox.length} min, hind {checkbox.price}</th>
@@ -158,11 +173,12 @@ class AcceptBooking extends Component {
                         <br/>
 
                         <div>
-                            {!this.state.isHidden && this.timesFullCheck(something, [...selected].length) &&
+                            {!this.state.isHidden && this.timesFullCheck(something, [...this.props.selectedCheckboxes].length) &&
                             <div>Lõppaeg:</div>}
-                            {!this.state.isHidden && !this.timesFullCheck(something, [...selected].length) &&
+                            {!this.state.isHidden && !this.timesFullCheck(something, [...this.props.selectedCheckboxes].length) &&
                             <div>Please choose another time</div>}
-                            {!this.state.isHidden && this.timesFullCheck(something, [...selected].length) && this.valid(something, [...selected].length)}
+                            {!this.state.isHidden && this.timesFullCheck(something, [...this.props.selectedCheckboxes].length) &&
+                            this.valid(something, [...this.props.selectedCheckboxes].length)}
                         </div>
 
 
@@ -183,4 +199,4 @@ class AcceptBooking extends Component {
     }
 }
 
-export default AcceptBooking;
+export default connect(mapStateToProps, mapDispatchToProps)(AcceptBooking);

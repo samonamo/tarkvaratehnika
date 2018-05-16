@@ -4,7 +4,7 @@ import './Css.css';
 import AcceptBooking from "./components/bodyComponents/AcceptBooking";
 import SignUpLayout from "./components/helpComponents/SignUpLayout";
 import SignInLayout from "./components/helpComponents/SignInLayout";
-import {ListOfWorks} from "./components/bodyComponents/ListOfWorks";
+import ListOfWorks from "./components/bodyComponents/ListOfWorks";
 import * as Constants from "./constants/Constants";
 import {bindActionCreators} from "redux";
 import {connect} from 'react-redux';
