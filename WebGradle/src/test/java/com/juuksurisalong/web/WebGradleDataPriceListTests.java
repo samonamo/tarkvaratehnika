@@ -7,32 +7,32 @@ import java.util.Objects;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.juuksurisalong.web.data.PriceList;
+import com.juuksurisalong.web.data.Service;
 
 public class WebGradleDataPriceListTests {
 
-	private PriceList newPriceList;
+	private Service newService;
 	
 	@Before 
 	public void setUp() {
-		newPriceList = new PriceList();
+		newService = new Service();
 	}
 	
 	@Test
 	public void testIfCorrectNameIsReturned() {
-		newPriceList.setName("teenuseNimi");
-		assertEquals("teenuseNimi", newPriceList.getName());
+		newService.setName("teenuseNimi");
+		assertEquals("teenuseNimi", newService.getName());
 	}
 
 	@Test
 	public void testIfCorrectLengthIsReturned() {
-		newPriceList.setLength("1 hour");
-		assertEquals("1 hour", newPriceList.getLength());
+		newService.setLength("1 hour");
+		assertEquals("1 hour", newService.getLength());
 	}
 	
 	@Test
 	public void testIfListedWorkIdIsNotNull() {
-		assertFalse(Objects.isNull(newPriceList.getListedWorkID()));
+		assertFalse(Objects.isNull(newService.getListedWorkID()));
 	}
 	
 	

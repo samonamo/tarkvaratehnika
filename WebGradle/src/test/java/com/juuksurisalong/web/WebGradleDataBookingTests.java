@@ -8,14 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.juuksurisalong.web.data.Booking;
-import com.juuksurisalong.web.data.PriceList;
+import com.juuksurisalong.web.data.Service;
 
 public class WebGradleDataBookingTests {
 
 	private Booking booking;
 	private String price;
-	private String firstName;
-	private String lastName;
 //	private String[] reservationDescription = new String[] {"lõikus", "soeng", "värvimine"};
 	
 	@Before 
@@ -29,13 +27,6 @@ public class WebGradleDataBookingTests {
 		booking.setPrice(price);
 		assertEquals("50€", booking.getPrice());
 	}
-	
-	@Test
-	public void testIfCorrectUserNameIsReturned() {
-		firstName = "Peeter";
-		lastName = "Peterson";
-		booking.setUserName(firstName, lastName);
-		assertEquals("Peeter Peterson", booking.getUserName());
-	}		
+			
 
 }

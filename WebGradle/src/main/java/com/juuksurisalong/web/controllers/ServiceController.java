@@ -9,33 +9,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.juuksurisalong.web.data.PriceList;
-import com.juuksurisalong.web.repositories.PriceListRepository;
+import com.juuksurisalong.web.data.Service;
+import com.juuksurisalong.web.repositories.ServiceRepository;
 
 @Controller
 @RequestMapping(path="/service") // URL start with /service
-public class PriceListController {
+public class ServiceController {
 	@Autowired
-	private PriceListRepository priceListRepository;
+	private ServiceRepository serviceRepository;
 	
-	public PriceListController(PriceListRepository priceListRepository) {
-		this.priceListRepository = priceListRepository;
+	public ServiceController(ServiceRepository serviceRepository) {
+		this.serviceRepository = serviceRepository;
 	}
 	
 	@RequestMapping(path="price/getlist", method=RequestMethod.GET)
-	public @ResponseBody Iterable<PriceList> getFullPriceList () {
-		List<PriceList> pricelist = priceListRepository.findAll();
-			if (!pricelist.isEmpty()) {
-				return pricelist;
+	public @ResponseBody Iterable<Service> getFullService () {
+		List<Service> service = serviceRepository.findAll();
+			if (!service.isEmpty()) {
+				return service;
 			}
 			return null;
 	}
 	
 	@RequestMapping(path="price/add", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody PriceList addPriceList(@RequestBody PriceList priceList) {
+	public @ResponseBody Service addService(@RequestBody Service service) {
 		//Add price list one tab
-		priceListRepository.save(priceList);
-		return priceList;
+		serviceRepository.save(service);
+		return service;
 	}
 	
 }

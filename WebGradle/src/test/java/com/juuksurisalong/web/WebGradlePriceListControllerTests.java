@@ -6,33 +6,33 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.juuksurisalong.web.controllers.PriceListController;
-import com.juuksurisalong.web.data.PriceList;
-import com.juuksurisalong.web.repositories.PriceListRepository;
+import com.juuksurisalong.web.controllers.ServiceController;
+import com.juuksurisalong.web.data.Service;
+import com.juuksurisalong.web.repositories.ServiceRepository;
 
 public class WebGradlePriceListControllerTests {
 
-	private PriceListRepository mockedPriceListRepository;
-	private PriceListController priceListController;
-	private PriceList priceList;
+	private ServiceRepository mockedServiceRepository;
+	private ServiceController serviceController;
+	private Service service;
 	
 	@Before
     public void setUp() {
-		mockedPriceListRepository = Mockito.mock(PriceListRepository.class);
-		priceListController = new PriceListController(mockedPriceListRepository);
-        priceList = new PriceList();
+		mockedServiceRepository = Mockito.mock(ServiceRepository.class);
+		serviceController = new ServiceController(mockedServiceRepository);
+        service = new Service();
       
     }
 	
 	@Test
 	public void testGetFullPriceList() {
-		priceListController.getFullPriceList();
-		Mockito.verify(mockedPriceListRepository, times(1)).findAll();
+		serviceController.getFullService();
+		Mockito.verify(mockedServiceRepository, times(1)).findAll();
 	}
 	
 	@Test
 	public void testAddPriceList() {
-		priceListController.addPriceList(priceList);
-		Mockito.verify(mockedPriceListRepository, times(1)).save(priceList);
+		serviceController.addService(service);
+		Mockito.verify(mockedServiceRepository, times(1)).save(service);
 	}
 }
