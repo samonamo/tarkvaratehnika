@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Checkbox from "../helpComponents/CheckBox";
 import {Link} from "react-router-dom";
 import * as Constants from "../../constants/Constants";
-import {Redirect} from "react-router-dom";
 import {bindActionCreators} from "redux";
 import {connect} from 'react-redux';
 
@@ -31,10 +30,10 @@ class ListOfWorks extends Component {
         fetch('http://localhost:8080/service/price/getlist')
             .then(response => response.json())
             .then(data => this.setState({data: data}));
+        this.props.selectedCheckboxes.clear();
     }
 
     toggleCheckbox = label => {
-        console.log(this.props.selectedCheckboxes)
         if (this.props.selectedCheckboxes.has(label)) {
             this.props.selectedCheckboxes.delete(label);
         } else {

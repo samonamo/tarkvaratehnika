@@ -46,7 +46,7 @@ class Events extends React.Component {
         return (
 
             <div>
-                <div style={{height: 500, width: 700}}>
+                <div style={{height: 400, width: 700}}>
                     <BigCalendar
                         formats={formats}
                         events={allEvents}

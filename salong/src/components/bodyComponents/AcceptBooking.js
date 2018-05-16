@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import Events from "../helpComponents/Events";
-import * as Constants from "../../constants/Constants";
-import {Redirect} from "react-router-dom";
+import './Bookings.css';
 import {bindActionCreators} from "redux";
-import {connect} from 'react-redux';
+import {connect} from "react-redux";
+import * as Constants from "../../constants/Constants";
 
 let times = ["8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
 let helpArray = [];
@@ -26,8 +26,15 @@ class AcceptBooking extends Component {
         this.state = {
             isHidden: true,
             bookings: [],
-            date: [],
-            value: ''
+            date: '',
+            value: '',
+            userID: '',
+            endTime: '',
+            startingTime: '',
+            month: '',
+            day: '',
+            year: '',
+
         };
     }
 
@@ -35,14 +42,38 @@ class AcceptBooking extends Component {
         this.setState({date: event.target.value});
         times = ["8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
         helpArray = [];
+        console.log(this.state);
         this.iterateOverArray();
     }
 
     handleChangeForSelect(event) {
         this.setState({
             value: event.target.value,
+            startingTime: event.target.value,
             isHidden: false
         });
+
+        console.log(this.valid(event.target.value, [...this.props.selectedCheckboxes].length));
+        this.setState({
+            userID: this.props.userID,
+            endTime: this.valid(event.target.value, [...this.props.selectedCheckboxes].length),
+            month:  new Date(this.state.date).getMonth() + 1,
+            day:  new Date(this.state.date).getDate(),
+            year:  new Date(this.state.date).getFullYear()
+        });
+    }
+
+    setStateFunction () {
+        this.setState({
+            userID: this.props.userID,
+            endTime: this.valid(this.state.value, [...this.props.selectedCheckboxes].length),
+            startTime: this.state.value,
+            month:  new Date(this.state.date).getMonth(),
+            day:  new Date(this.state.date).getDate(),
+            year:  new Date(this.state.date).getFullYear()
+        });
+
+        console.log((this.state))
     }
 
     iterateOverArray() {
@@ -93,7 +124,6 @@ class AcceptBooking extends Component {
         let boolean = true;
         for (let int = 1; int <= raiseNumber; int++) {
             const AEG = this.valid(time, int);
-            console.log(AEG);
             if (times.indexOf(AEG) === -1) {
                 boolean = false;
             }
@@ -110,9 +140,10 @@ class AcceptBooking extends Component {
     }
 
     onSubmit = event => {
+        this.setStateFunction();
+
         event.preventDefault();
-        console.log(JSON.stringify(this.state));
-        fetch('http://localhost:8080/service/booking/test', {
+        fetch('http://localhost:8080/service/booking/add', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -126,15 +157,14 @@ class AcceptBooking extends Component {
     };
 
     render() {
+        let chosenDate = this.state.value;
+        let inValid =  this.state.isHidden || this.props.selectedCheckboxes.length === 0
+            || !this.timesFullCheck(chosenDate, [...this.props.selectedCheckboxes].length);
 
-        const inValid = this.props.selectedCheckboxes.size === 0;
-        console.log(this.props.selectedCheckboxes);
-
-        let something = this.state.value;
 
         return (
 
-            <div>
+            <div className="container">
 
                 <h1>Accept Booking</h1>
                 <table>
@@ -162,36 +192,34 @@ class AcceptBooking extends Component {
                         <br/>
                         <input onChange={this.handleChange.bind(this)} type="date" min="2018-05-15"
                                max="2018-06-31"/>
+                        <br/><br/>
+                        <div className="text">Valige algusaeg:</div>
                         <br/>
-
-                        Valige algusaeg:
                         <select onChange={this.handleChangeForSelect.bind(this)}>
                             {times.map((item, index) => {
                                 return <option key={index} value={item}>{item}</option>
                             })}
                         </select>
-                        <br/>
-
+                        <br/><br/>
                         <div>
-                            {!this.state.isHidden && this.timesFullCheck(something, [...this.props.selectedCheckboxes].length) &&
+                            {!this.state.isHidden && this.timesFullCheck(chosenDate, [...this.props.selectedCheckboxes].length) &&
                             <div>Lõppaeg:</div>}
-                            {!this.state.isHidden && !this.timesFullCheck(something, [...this.props.selectedCheckboxes].length) &&
+                            {!this.state.isHidden && !this.timesFullCheck(chosenDate, [...this.props.selectedCheckboxes].length) &&
                             <div>Please choose another time</div>}
-                            {!this.state.isHidden && this.timesFullCheck(something, [...this.props.selectedCheckboxes].length) &&
-                            this.valid(something, [...this.props.selectedCheckboxes].length)}
+                            {!this.state.isHidden && this.timesFullCheck(chosenDate, [...this.props.selectedCheckboxes].length) &&
+                            this.valid(chosenDate, [...this.props.selectedCheckboxes].length)}
                         </div>
 
 
                         <br/>
-                        <button disabled={inValid} onSubmit={this.onSubmit}> Book</button>
+                        <br/>
+                        <button className="btn-success" disabled={inValid} onClick={this.onSubmit}> Book</button>
                         <br/>
                     </form>
                 </div>
-
+                <br/>
                 <div className="EventsCalendar">
-
                     <Events/>
-
                 </div>
 
             </div>

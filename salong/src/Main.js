@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Link, Route} from "react-router-dom";
-import './Css.css';
+import './Main.css';
 import AcceptBooking from "./components/bodyComponents/AcceptBooking";
 import SignUpLayout from "./components/helpComponents/SignUpLayout";
 import SignInLayout from "./components/helpComponents/SignInLayout";
@@ -36,14 +36,14 @@ class Main extends Component {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/Booking">Booking</Link></li>
             <li><Link to="/" onClick={this.props.actions.logout}>Log out</Link></li>
-        </ul>
+        </ul>;
 
         const visitorLinks = <ul>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/Booking">Booking</Link></li>
             <li><Link to="/SignIn">Sign in</Link></li>
             <li><Link to="/SignUp">Sign up</Link></li>
-        </ul>
+        </ul>;
 
         return (
             <div>
