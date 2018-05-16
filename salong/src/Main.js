@@ -5,7 +5,9 @@ import AcceptBooking from "./components/bodyComponents/AcceptBooking";
 import SignUpLayout from "./components/helpComponents/SignUpLayout";
 import SignInLayout from "./components/helpComponents/SignInLayout";
 import {ListOfWorks} from "./components/bodyComponents/ListOfWorks";
-
+import * as Constants from "./constants/Constants";
+import {bindActionCreators} from "redux";
+import {connect} from 'react-redux';
 
 const Home = () => (
     <div className="Homepage">
@@ -13,20 +15,40 @@ const Home = () => (
     </div>
 );
 
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.loggedIn
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators(Constants, dispatch),
+    }
+};
+
 class Main extends Component {
 
-
     render() {
+
+        const userLinks = <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/Booking">Booking</Link></li>
+            <li><Link to="/" onClick={this.props.actions.logout}>Log out</Link></li>
+        </ul>
+
+        const visitorLinks = <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/Booking">Booking</Link></li>
+            <li><Link to="/SignIn">Sign in</Link></li>
+            <li><Link to="/SignUp">Sign up</Link></li>
+        </ul>
+
         return (
             <div>
                 <Router>
                     <div>
-                        <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to="/Booking">Booking</Link></li>
-                            <li><Link to="/SignIn">Sign in</Link></li>
-                            <li><Link to="/SignUp">Sign up</Link></li>
-                        </ul>
+                        {this.props.loggedIn? userLinks : visitorLinks}
 
                         <Route exact path="/" component={Home}/>
                         <Route path="/Booking" component={ListOfWorks}/>
@@ -40,4 +62,4 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

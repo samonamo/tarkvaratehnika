@@ -1,15 +1,36 @@
 import React, {Component} from "react";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
+import * as Constants from "../../constants/Constants";
+import {Redirect} from "react-router-dom";
+import {bindActionCreators} from "redux";
+import {connect} from 'react-redux';
+
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.loggedIn,
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators(Constants, dispatch),
+    }
+};
 
 class SignInForm extends Component {
+    constructor() {
+        super();
+        this.loginHandler = this.loginHandler.bind(this);
+    }
 
     state = {
         email: '',
         emailError: '',
         password: '',
         passwordError: '',
-        validError : ''
+        validError : '',
+        loggedIn: false
     };
 
     change = event => {
@@ -39,7 +60,7 @@ class SignInForm extends Component {
         return isError;
     };
 
-    onSubmit = event => {
+    loginHandler(event) {
         event.preventDefault();
 
         const err = this.validate();
@@ -52,12 +73,16 @@ class SignInForm extends Component {
                 },
                 body: JSON.stringify(this.state)
             })
-                .then(response => response.json())
-                .then(data => console.log("Data:" + JSON.stringify(data))
-                );
-            event.preventDefault();
+                .then(response => {return response.json()})
+                .then(data => {
+                    if (data.email !== null) {
+                        this.props.actions.login({email: this.state.email});
+                    } else {
+                        alert(data.errorMsg);
+                    }
+                })
+                .catch((error) => console.error(error))
         }
-
     };
 
     render() {
@@ -70,6 +95,9 @@ class SignInForm extends Component {
         const isInvalid =
             email === '' ||
             password === '';
+
+        if (this.props.loggedIn)
+            return <Redirect to="/"/>
 
         return (
             <form>
@@ -94,10 +122,10 @@ class SignInForm extends Component {
                     floatingLabelFixed
                 />
                 <br/>
-                <RaisedButton disabled={isInvalid} label="Submit" onClick={e => this.onSubmit(e)} primary/>
+                <RaisedButton disabled={isInvalid} label="Submit" onClick={this.loginHandler} primary/>
             </form>
         );
     }
 }
 
-export default SignInForm;
+export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);

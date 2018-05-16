@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
+import {Redirect} from "react-router-dom";
 
 const hasNumber = /\d/;
 
@@ -16,6 +17,7 @@ class SignUpForm extends Component {
         passwordError: "",
         secondPassword: "",
         secondPasswordError: "",
+        registerSuccess: false
     };
 
     change = event => {
@@ -39,9 +41,9 @@ class SignUpForm extends Component {
             errors.firstnameError = "First name cant be empty";
         }
 
-        if (this.state.lastName.length < 5) {
+        if (this.state.lastName.length < 1) {
             isError = true;
-            errors.lastNameError = "Last name must be 6 symbol length";
+            errors.lastNameError = "Last name cant be empty";
         }else if(hasNumber.test(this.state.lastName)){
             isError = true;
             errors.lastNameError = "Last name can't contain numbers";
@@ -74,7 +76,13 @@ class SignUpForm extends Component {
                 body: JSON.stringify(this.state)
             })
                 .then(response => response.json())
-                .then(data => console.log("Data:" + JSON.stringify(data)));
+                .then(data =>{
+                    if (data.password !== this.state.password) {
+                        this.setState({registerSuccess: true});
+                    }
+                }).catch(error => {
+                    console.log(error)
+                    alert(error)});
 
             event.preventDefault();
         }
@@ -97,6 +105,9 @@ class SignUpForm extends Component {
             lastName === '' ||
             firstName === '' ||
             password === secondPassword;
+
+        if (this.state.registerSuccess)
+            return <Redirect to="/SignIn"/>;
 
         return (
             <form>
