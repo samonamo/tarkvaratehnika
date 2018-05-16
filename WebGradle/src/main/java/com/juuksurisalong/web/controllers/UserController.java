@@ -1,6 +1,7 @@
 package com.juuksurisalong.web.controllers;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class UserController {
 		if (!users.isEmpty()) {
 			return users;
 		}
-		return null;
+		return new ArrayList<>();
 	}
 	
 	@RequestMapping(path="users/register", method=RequestMethod.POST, consumes="application/json")
@@ -85,12 +86,20 @@ public class UserController {
 	public @ResponseBody User login(@RequestBody User user) {
 		//User data check
 		User dbUser = userRepository.findByEmail(user.getEmail());
-		if (dbUser!=null && dbUser.getPassword().equals(hashing(user.getPassword()))) {
-			return dbUser;
+		if (dbUser!=null) {
+			if (dbUser.getPassword().equals(hashing(user.getPassword()))) {
+				return dbUser;
+			}else {
+				User u = new User();
+				u.setErrorMsg("Wrong password");
+				return u;
+			}
+				
 		} else {
-			return null;
+			User u = new User();
+			u.setErrorMsg("Wrong email");
+			return u;
 		}
-		
 	}
 			
 	private String  hashing(String originalPassword) {

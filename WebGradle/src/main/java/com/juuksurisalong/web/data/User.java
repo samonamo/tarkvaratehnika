@@ -32,7 +32,14 @@ public class User {
 	@JoinColumn(name="roleId")
 	Role role;
 	boolean emailConfirmed;
+	String errorMsg;
 	
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -54,7 +61,6 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
 	public String getFirstName() {
 		return firstName;
 	}
