@@ -4,7 +4,7 @@ import {
 
 const initialState = {
     loggedIn: false,
-    email: "",
+    userID: "",
     selectedCheckboxes: new Set()
 };
 
@@ -14,13 +14,13 @@ const AppReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loggedIn: true,
-                email: action.data.email
+                userID: action.data.userID
             };
         case LOG_OUT:
             return {
                 ...state,
                 loggedIn: false,
-                email: ""
+                usserID: ""
             };
         case SELECTED_BOOKING:
             return {

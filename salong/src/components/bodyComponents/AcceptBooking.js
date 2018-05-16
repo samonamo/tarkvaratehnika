@@ -11,6 +11,7 @@ let helpArray = [];
 const mapStateToProps = state => {
     return {
         selectedCheckboxes: state.selectedCheckboxes,
+        userID: state.userID
     }
 };
 

@@ -79,7 +79,7 @@ class SignInForm extends Component {
                 })
                 .then(data => {
                     if (data.email !== null) {
-                        this.props.actions.login({email: this.state.email});
+                        this.props.actions.login({userID: data.userId});
                     } else {
                         alert(data.errorMsg);
                     }

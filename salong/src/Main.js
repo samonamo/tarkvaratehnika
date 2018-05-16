@@ -12,7 +12,6 @@ import {connect} from 'react-redux';
 const Home = () => (
     <div className="Homepage">
         <h2>Juuksurisalong</h2>
-        Siin peaks olema info salongist ning tema kontaktandmed.
     </div>
 );
 
