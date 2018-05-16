@@ -57,23 +57,10 @@ class AcceptBooking extends Component {
         this.setState({
             userID: this.props.userID,
             endTime: this.valid(event.target.value, [...this.props.selectedCheckboxes].length),
-            month:  new Date(this.state.date).getMonth() + 1,
-            day:  new Date(this.state.date).getDate(),
-            year:  new Date(this.state.date).getFullYear()
+            month: new Date(this.state.date).getMonth() + 1,
+            day: new Date(this.state.date).getDate(),
+            year: new Date(this.state.date).getFullYear()
         });
-    }
-
-    setStateFunction () {
-        this.setState({
-            userID: this.props.userID,
-            endTime: this.valid(this.state.value, [...this.props.selectedCheckboxes].length),
-            startTime: this.state.value,
-            month:  new Date(this.state.date).getMonth(),
-            day:  new Date(this.state.date).getDate(),
-            year:  new Date(this.state.date).getFullYear()
-        });
-
-        console.log((this.state))
     }
 
     iterateOverArray() {
@@ -140,7 +127,6 @@ class AcceptBooking extends Component {
     }
 
     onSubmit = event => {
-        this.setStateFunction();
 
         event.preventDefault();
         fetch('http://localhost:8080/service/booking/add', {
@@ -158,7 +144,7 @@ class AcceptBooking extends Component {
 
     render() {
         let chosenDate = this.state.value;
-        let inValid =  this.state.isHidden || this.props.selectedCheckboxes.length === 0
+        let inValid = this.state.isHidden || this.props.selectedCheckboxes.length === 0
             || !this.timesFullCheck(chosenDate, [...this.props.selectedCheckboxes].length);
 
 
