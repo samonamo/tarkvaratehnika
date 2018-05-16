@@ -19,21 +19,13 @@ class Events extends React.Component {
             .then(data => this.setState({data: data}));
     }
 
-    createEvents() {
-        const {data} = this.state;
-        return data.map((date) => {
-          console.log(new Date(parseInt(date.year), parseInt(date.month), parseInt(date.day)))
-
-        })
-    };
-
 
     render() {
         let allViews = ['month', 'work_week', 'day'];
         const minTime = new Date();
         minTime.setHours(8, 0, 0);
         const maxTime = new Date();
-        maxTime.setHours(18, 0, 0);
+        maxTime.setHours(20, 0, 0);
 
         const dateNow = new Date();
 
@@ -45,8 +37,8 @@ class Events extends React.Component {
            return (
                {
                    title: "Broneeritud",
-                   start: new Date(parseInt(date.year), parseInt(date.month) - 1, parseInt(date.day), parseInt(date.startingTime)),
-                   end: new Date(parseInt(date.year), parseInt(date.month) - 1, parseInt(date.day), parseInt(date.endTime))
+                   start: new Date(parseInt(date.year, 10), parseInt(date.month, 10) - 1, parseInt(date.day, 10), parseInt(date.startingTime, 10)),
+                   end: new Date(parseInt(date.year, 10), parseInt(date.month, 10) - 1, parseInt(date.day, 10), parseInt(date.endTime, 10))
                }
            )
         });

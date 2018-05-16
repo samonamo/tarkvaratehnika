@@ -36,9 +36,9 @@ class SignUpForm extends Component {
             passwordError: ""
         };
 
-        if (this.state.firstName.length < 1) {
+        if (hasNumber.test(this.state.firstName)) {
             isError = true;
-            errors.firstnameError = "First name cant be empty";
+            errors.firstnameError = "First name can't contain numbers";
         }
 
         if (this.state.lastName.length < 1) {
